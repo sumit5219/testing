@@ -24,6 +24,7 @@ var state = null;
 const I_CAN_START = 0;
 const I_CAN_STOP = 1;
 const I_AM_STARTING = 2;
+const I_AM_PLAYING = 3;
 
 window.onload = function() {
 	console = new Console();
@@ -83,6 +84,28 @@ function start() {
     });
 }
 
+
+function play() {
+	console.log('Playing the recorded video ...')
+
+	// Disable start button
+	setState(I_AM_STARTING);
+	showSpinner(videoInput, videoOutput);
+
+	console.log('Creating WebRtcPeer and generating local sdp offer ...');
+
+    var options = {
+      localVideo: videoInput,
+      remoteVideo: videoOutput,
+      onicecandidate : onIceCandidate
+    }
+
+    webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+        if(error) return onError(error);
+        this.generateOffer(onPlayOffer);
+    });
+}
+
 function onIceCandidate(candidate) {
 	   console.log('Local candidate' + JSON.stringify(candidate));
 
@@ -94,6 +117,17 @@ function onIceCandidate(candidate) {
 }
 
 function onOffer(error, offerSdp) {
+	if(error) return onError(error);
+
+	console.info('Invoking SDP offer callback function ' + location.host);
+	var message = {
+		id : 'start',
+		sdpOffer : offerSdp
+	}
+	sendMessage(message);
+}
+
+function onPlayOffer(error, offerSdp) {
 	if(error) return onError(error);
 
 	console.info('Invoking SDP offer callback function ' + location.host);
@@ -133,20 +167,33 @@ function setState(nextState) {
 	switch (nextState) {
 	case I_CAN_START:
 		$('#start').attr('disabled', false);
+		$('#play').attr('disabled', false);
 		$('#start').attr('onclick', 'start()');
+		$('#play').attr('onclick', 'play()');
 		$('#stop').attr('disabled', true);
 		$('#stop').removeAttr('onclick');
 		break;
 
 	case I_CAN_STOP:
 		$('#start').attr('disabled', true);
+		$('#play').attr('disabled', true);
 		$('#stop').attr('disabled', false);
 		$('#stop').attr('onclick', 'stop()');
 		break;
 
 	case I_AM_STARTING:
 		$('#start').attr('disabled', true);
+		$('#play').attr('disabled', true);
 		$('#start').removeAttr('onclick');
+		$('#stop').attr('disabled', true);
+		$('#stop').removeAttr('onclick');
+		break;
+
+	case I_AM_PLAYING:
+		$('#start').attr('disabled', true);
+		$('#play').attr('disabled', true);
+		$('#start').removeAttr('onclick');
+		$('#play').removeAttr('onclick');
 		$('#stop').attr('disabled', true);
 		$('#stop').removeAttr('onclick');
 		break;

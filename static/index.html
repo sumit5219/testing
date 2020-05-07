@@ -22,24 +22,14 @@
     <script src="bower_components/kurento-utils/js/kurento-utils.js"></script>
 
     <script src="js/index.js"></script>
-    <title>Kurento Tutorial 1: Hello World</title>
+    <title>Kurento Test Application</title>
   </head>
   <body>
 
     <header>
       <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"></button>
-            <a class="navbar-brand" href=".">Kurento Tutorial</a>
-          </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="https://github.com/Kurento/kurento-tutorial-node/tree/master/kurento-hello-world">
-                  <span class="glyphicon glyphicon-file"></span> Source Code</a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
@@ -47,19 +37,16 @@
 
     <div class="container">
       <div class="page-header">
-        <h1>Tutorial 1: Hello World (WebRTC in loopback)</h1>
+        <h1>kurento Test Application</h1>
         <p>
-          This application shows a <i>WebRtcEndpoint</i> connected to itself
-          (loopback). Take a look to the <a href="img/pipeline.png"
-            data-toggle="lightbox" data-title="Hello World Media Pipeline"
-            data-footer="WebRtcEnpoint in loopback">Media Pipeline</a>. To run
-          this demo follow these steps:
+          This application shows below following use cases
         </p>
         <ol>
           <li>Open this page with a browser compliant with WebRTC (Chrome, Firefox).</li>
-          <li>Click on <i>Start</i> button.</li>
+          <li>Click on <i>Start -  for recording at connected media server</i> button.</li>
           <li>Grant the access to the camera and microphone. After the SDP negotiation the loopback should start.</li>
           <li>Click on <i>Stop</i> to finish the communication.</li>
+          <li>Click on <i>Play -  Play a recorded media</i> button.</li>
         </ol>
       </div>
       <div class="row">
@@ -74,6 +61,11 @@
             <br/>
             <a id="stop" href="#" class="btn btn-danger">
               <span class="glyphicon glyphicon-stop"></span> Stop</a>
+            <br/>
+            <br/>
+            <a id="play" href="#" class="btn btn-success">
+              <span class="glyphicon glyphicon-play"></span> Play</a>
+            <br/>
         </div>
         <div class="col-md-5">
           <h3>Remote stream</h3>
@@ -94,7 +86,7 @@
       <div class="foot-fixed-bottom">
         <div class="container text-center">
           <hr/>
-          <div class="row">&copy; 2014-2015 Kurento</div>
+          <div class="row">&copy; 2020-2021 OpenTurf</div>
           <div class="row">
             <div class="col-md-4">
               <a href="http://www.urjc.es">
